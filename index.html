@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Markdown Previewer</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
+</head>
+<body>
+  <header>
+    <div class="logo">
+      <span class="logo-icon">⬡</span>
+      <span class="logo-text">Markdown <strong>Previewer</strong></span>
+    </div>
+    <div class="toolbar">
+      <button class="btn-icon" id="btn-bold" title="Gras (Ctrl+B)"><b>B</b></button>
+      <button class="btn-icon" id="btn-italic" title="Italique (Ctrl+I)"><i>I</i></button>
+      <button class="btn-icon" id="btn-heading" title="Titre">H</button>
+      <button class="btn-icon" id="btn-link" title="Lien">🔗</button>
+      <button class="btn-icon" id="btn-code" title="Code">&lt;/&gt;</button>
+      <button class="btn-icon" id="btn-quote" title="Citation">❝</button>
+      <div class="separator"></div>
+      <button class="btn-icon" id="btn-theme" title="Thème">🌙</button>
+      <button class="btn-icon" id="btn-copy" title="Copier HTML">📋</button>
+      <button class="btn-icon" id="btn-clear" title="Effacer">🗑</button>
+    </div>
+  </header>
+
+  <main class="container">
+    <section class="pane editor-pane">
+      <div class="pane-header">
+        <span class="pane-title">✏️ Éditeur Markdown</span>
+        <span class="char-count" id="char-count">0 caractères</span>
+      </div>
+      <textarea id="editor" spellcheck="false" placeholder="Tapez votre Markdown ici..."></textarea>
+    </section>
+
+    <div class="divider" id="divider"></div>
+
+    <section class="pane preview-pane">
+      <div class="pane-header">
+        <span class="pane-title">👁 Aperçu HTML</span>
+        <button class="btn-small" id="btn-fullscreen">Plein écran</button>
+      </div>
+      <div id="preview" class="preview-content"></div>
+    </section>
+  </main>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
