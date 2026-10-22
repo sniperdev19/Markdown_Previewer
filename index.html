@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Markdown Previewer</title>
+  <title>Doc → Markdown</title>
   <link rel="stylesheet" href="style.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/styles/github-dark.min.css" />
 </head>
@@ -11,44 +11,75 @@
   <header>
     <div class="logo">
       <span class="logo-icon">⬡</span>
-      <span class="logo-text">Markdown <strong>Previewer</strong></span>
+      <span class="logo-text">Doc → <strong>Markdown</strong></span>
     </div>
     <div class="toolbar">
-      <button class="btn-icon" id="btn-bold" title="Gras (Ctrl+B)"><b>B</b></button>
-      <button class="btn-icon" id="btn-italic" title="Italique (Ctrl+I)"><i>I</i></button>
-      <button class="btn-icon" id="btn-heading" title="Titre">H</button>
-      <button class="btn-icon" id="btn-link" title="Lien">🔗</button>
-      <button class="btn-icon" id="btn-code" title="Code">&lt;/&gt;</button>
-      <button class="btn-icon" id="btn-quote" title="Citation">❝</button>
+      <button class="btn-text" id="btn-open" title="Ouvrir un fichier">📂 Ouvrir</button>
       <div class="separator"></div>
+      <button class="btn-text" id="btn-copy-md" title="Copier le Markdown">📋 Copier MD</button>
+      <button class="btn-text btn-primary" id="btn-download" title="Télécharger en .md">⬇ Télécharger .md</button>
+      <div class="separator"></div>
+      <button class="btn-icon" id="btn-copy" title="Copier le HTML">&lt;/&gt;</button>
       <button class="btn-icon" id="btn-theme" title="Thème">🌙</button>
-      <button class="btn-icon" id="btn-copy" title="Copier HTML">📋</button>
-      <button class="btn-icon" id="btn-clear" title="Effacer">🗑</button>
+      <button class="btn-icon" id="btn-clear" title="Tout effacer">🗑</button>
     </div>
+    <input type="file" id="file-input" accept=".docx,.pdf,.html,.htm,.txt,.md" hidden />
   </header>
 
   <main class="container">
     <section class="pane editor-pane">
       <div class="pane-header">
-        <span class="pane-title">✏️ Éditeur Markdown</span>
-        <span class="char-count" id="char-count">0 caractères</span>
+        <span class="pane-title">📄 Source &amp; Markdown</span>
+        <span class="char-count" id="char-count">0 caractère</span>
       </div>
-      <textarea id="editor" spellcheck="false" placeholder="Tapez votre Markdown ici..."></textarea>
+
+      <div class="dropzone" id="dropzone" tabindex="0" role="button" aria-label="Déposer ou choisir un fichier">
+        <div class="drop-empty" id="drop-empty">
+          <span class="drop-icon">⬆</span>
+          <p><strong>Glissez un fichier ici</strong> ou cliquez pour parcourir</p>
+          <p class="drop-hint">Word (.docx) · PDF · HTML · TXT</p>
+        </div>
+        <div class="drop-file" id="drop-file" hidden>
+          <span class="file-badge" id="file-badge">DOCX</span>
+          <div class="file-info">
+            <span class="file-name" id="file-name"></span>
+            <span class="file-meta" id="file-meta"></span>
+          </div>
+          <span class="file-change">Changer</span>
+        </div>
+      </div>
+
+      <label class="option" id="opt-images" hidden>
+        <input type="checkbox" id="chk-images" />
+        Inclure les images Word (encodées en base64 — fichier plus lourd)
+      </label>
+
+      <textarea id="editor" spellcheck="false" placeholder="Le Markdown converti apparaîtra ici — vous pouvez l'éditer librement…"></textarea>
     </section>
 
     <div class="divider" id="divider"></div>
 
     <section class="pane preview-pane">
       <div class="pane-header">
-        <span class="pane-title">👁 Aperçu HTML</span>
+        <span class="pane-title">👁 Aperçu</span>
         <button class="btn-small" id="btn-fullscreen">Plein écran</button>
       </div>
       <div id="preview" class="preview-content"></div>
     </section>
   </main>
 
+  <div class="loader" id="loader" hidden>
+    <div class="spinner"></div>
+    <p id="loader-text">Conversion en cours…</p>
+  </div>
+
   <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/9.1.6/marked.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/3.0.6/purify.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.9.0/highlight.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mammoth/1.6.0/mammoth.browser.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/turndown@7.1.2/dist/turndown.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/turndown-plugin-gfm@1.0.2/dist/turndown-plugin-gfm.js"></script>
   <script src="script.js"></script>
 </body>
 </html>
